@@ -1,5 +1,7 @@
 from flask import Blueprint, jsonify, request
 
+from app.models import Addition
+
 math_bp = Blueprint("math", __name__)
 
 
@@ -17,6 +19,8 @@ def add():
 
     if not isinstance(a, (int, float)) or not isinstance(b, (int, float)):
         return jsonify({"error": "'a' and 'b' must be numbers"}), 400
+
+    Addition.create(a=a, b=b)
 
     return jsonify({"result": a + b})
 
