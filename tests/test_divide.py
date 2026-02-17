@@ -1,7 +1,19 @@
+from app.models import Quotient
+
+
 def test_divide_integers(client):
     response = client.post("/divide", json={"a": 10, "b": 2})
     assert response.status_code == 200
     assert response.get_json() == {"result": 5.0}
+
+
+def test_divide_saves_operands(client):
+    Quotient.delete().execute()
+    client.post("/divide", json={"a": 20, "b": 4})
+    record = Quotient.select().order_by(Quotient.id.desc()).get()
+    assert record.a == 20
+    assert record.b == 4
+    assert record.created_at is not None
 
 
 def test_divide_floats(client):

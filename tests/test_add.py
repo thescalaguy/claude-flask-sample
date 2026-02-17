@@ -1,7 +1,19 @@
+from app.models import Addition
+
+
 def test_add_integers(client):
     response = client.post("/add", json={"a": 2, "b": 3})
     assert response.status_code == 200
     assert response.get_json() == {"result": 5}
+
+
+def test_add_saves_operands(client):
+    Addition.delete().execute()
+    client.post("/add", json={"a": 7, "b": 8})
+    record = Addition.select().order_by(Addition.id.desc()).get()
+    assert record.a == 7
+    assert record.b == 8
+    assert record.created_at is not None
 
 
 def test_add_floats(client):
