@@ -22,3 +22,13 @@ class Addition(Model):
 
     class Meta:
         database = db
+
+
+class Quotient(Model):
+    id = AutoField()
+    a = FloatField()
+    b = FloatField()
+    created_at = DateTimeField(default=datetime.datetime.now)
+
+    class Meta:
+        database = db

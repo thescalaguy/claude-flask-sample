@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 
-from app.models import Addition
+from app.models import Addition, Quotient
 
 math_bp = Blueprint("math", __name__)
 
@@ -42,5 +42,7 @@ def divide():
 
     if b == 0:
         return jsonify({"error": "Division by zero is not allowed"}), 400
+
+    Quotient.create(a=a, b=b)
 
     return jsonify({"result": a / b})
