@@ -7,6 +7,11 @@ math_bp = Blueprint("math", __name__)
 
 @math_bp.route("/add", methods=["POST"])
 def add():
+    """Add two numbers and persist the operands.
+
+    Expects a JSON body with numeric fields "a" and "b".
+    Returns {"result": a + b} on success or {"error": "..."} with 400 on invalid input.
+    """
     data = request.get_json()
     if data is None:
         return jsonify({"error": "Request body must be JSON"}), 400
@@ -27,6 +32,11 @@ def add():
 
 @math_bp.route("/divide", methods=["POST"])
 def divide():
+    """Divide two numbers and persist the operands.
+
+    Expects a JSON body with numeric fields "a" and "b" where "b" is non-zero.
+    Returns {"result": a / b} on success or {"error": "..."} with 400 on invalid input.
+    """
     data = request.get_json()
     if data is None:
         return jsonify({"error": "Request body must be JSON"}), 400
